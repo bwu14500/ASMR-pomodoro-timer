@@ -35,10 +35,25 @@ function createLi(li_name, data, reps) {
         start_button.setAttribute("id", "start-btn");
         // Update the clock every 1 second
         start_button.onclick = function () {
-            if(!paused){
-                timer = pomodoro;
-            }
             paused = false;
+            
+            // currentList that is playing
+            let currentLi = document.querySelector('.' + currentTask);
+
+            // current repetiton in this task
+            let current_rep = currentLi.querySelector('.rep-current');
+
+            // total repetition in this task
+            let total_rep = currentLi.querySelector('.rep');
+
+            // the state (state-rep or state-break) for this task
+            let current_state = currentLi.querySelector('.task-title');
+
+            // change the rep to 1
+            if (current_rep.innerHTML == "0") {
+                current_rep.innerHTML = "1";
+            }
+
             countdown = setInterval(function() {
             
                 var minutes = parseInt(timer / 60, 10);
@@ -49,12 +64,29 @@ function createLi(li_name, data, reps) {
         
                 document.querySelector('#time').textContent = minutes + " : " + seconds;
                 
-                // If the count down is finished, write some text 
+                // If the count down is finished, check if the rep is finished
                 if (--timer < 0) {
-                    timer = pomodoro;
+                    
+                    if (parseInt(current_rep.innerHTML) <= parseInt(total_rep.innerHTML) &&
+                            current_state.id == "state-rep") {
+                        // rep to break
+                        current_state.id = "state-break";
+                        timer = timebreak;
+                    }
+                    else if (parseInt(current_rep.innerHTML) < parseInt(total_rep.innerHTML) &&
+                            current_state.id == "state-break") {
+                        // break to next rep
+                        current_state.id = "state-rep";
+                        current_rep.innerHTML = parseInt(current_rep.innerHTML) + 1;
+                        timer = pomodoro;
+                    }
+                    else {
+                        // next task
+                        timer = pomodoro;
+                    }
                 }
                 
-                }, 1000);
+            }, 1000);
         }
         
         let pause_button = document.createElement('i');
@@ -81,17 +113,24 @@ function createLi(li_name, data, reps) {
 
     // create task name
     let task_title = document.createElement('span');
+    task_title.setAttribute("class", "task-title");
+    task_title.setAttribute("id", "state-rep");
     task_title.innerHTML = data;
     task_title.textContent += " ";
 
     // create rep
     let rep_cur = document.createElement('span');
+    rep_cur.setAttribute("class", "rep-current");
     rep_cur.innerHTML = '0';
+    let slash = document.createElement('span');
+    slash.innerHTML = " / ";
     let rep = document.createElement('span');
+    rep.setAttribute("class", "rep");
     rep.innerHTML = reps;
     rep.textContent += " ";
 
     list.appendChild(rep_cur);
+    list.appendChild(slash);
     list.appendChild(rep);
     list.appendChild(task_title);
     list.appendChild(delete_button);
@@ -115,7 +154,7 @@ document.querySelector("#task-form").onsubmit = function(event) {
         alert("Reps Cannot be empty!");
     }
     else {
-        createLi("Task" + taskNumber, value, ' / ' + rep_value);
+        createLi("Task" + taskNumber, value, rep_value);
     }
 
 }
