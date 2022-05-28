@@ -5,6 +5,7 @@ var timer = 0;
 var paused = false;
 var countdown;
 var menVoice = true;
+var currentTask = "Task1";
 
 document.querySelector("#sound-btn").onclick = function(event) {
     if (menVoice){
@@ -28,7 +29,7 @@ function createLi(li_name, data, reps) {
     let list = document.createElement('li');
     list.setAttribute("id", li_name);
     
-    if (list.id == "Task1") {
+    if (list.id == currentTask) {
         let start_button = document.createElement('i');
         start_button.setAttribute("class", "fa fa-play");
         start_button.setAttribute("id", "start-btn");
@@ -105,12 +106,16 @@ document.querySelector("#task-form").onsubmit = function(event) {
     let task = document.getElementById('task-text');
     let rep = document.getElementById('number');
     let value = task.value;
+    let rep_value = rep.value;
         
     if(!value) {
         alert("Name Cannot be empty!");
-    } 
+    }
+    else if (!rep_value) {
+        alert("Reps Cannot be empty!");
+    }
     else {
-        createLi("Task" + taskNumber, value, ' / ' + rep.value);
+        createLi("Task" + taskNumber, value, ' / ' + rep_value);
     }
 
 }
