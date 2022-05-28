@@ -38,19 +38,20 @@ function createLi(li_name, data, reps) {
             paused = false;
             
             // currentList that is playing
-            let currentLi = document.querySelector('.' + currentTask);
+            let currentList = document.querySelector("#" + currentTask);
 
             // current repetiton in this task
-            let current_rep = currentLi.querySelector('.rep-current');
+            let current_rep = currentList.querySelector('.rep-current');
 
             // total repetition in this task
-            let total_rep = currentLi.querySelector('.rep');
+            let total_rep = currentList.querySelector('.rep');
 
             // the state (state-rep or state-break) for this task
-            let current_state = currentLi.querySelector('.task-title');
+            let current_state = currentList.querySelector('.task-title');
 
-            // change the rep to 1
+            // initial state just before timer starts
             if (current_rep.innerHTML == "0") {
+                timer = pomodoro;
                 current_rep.innerHTML = "1";
             }
 
