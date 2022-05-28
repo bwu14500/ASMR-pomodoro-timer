@@ -1,27 +1,67 @@
-var countDownDate = new Date("Jan 5, 2024 15:37:25").getTime();
+var taskNumber = 0;
+var pomodoro = 1500;
+var timebreak = 300;
 
 // Update the count down every 1 second
-var x = setInterval(function() {
+function countdownTimeStart() {
+    var timer = pomodoro;
+    var countdown = setInterval(function() {
+        
+        var minutes = parseInt(timer / 60, 10);
+        var seconds = parseInt(timer % 60, 10);
 
-  // Get today's date and time
-  var now = new Date().getTime();
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
 
-  // Find the distance between now and the count down date
-  var distance = countDownDate - now;
+        document.querySelector('#time').textContent = minutes + ":" + seconds;
+      
+        // If the count down is finished, write some text 
+        if (--timer < 0) {
+            timer = pomodoro;
+        }
+      
+      }, 1000);
+}
 
-  // Time calculations for days, hours, minutes and seconds
-  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+function createDiv(div_name, data, reps) {
 
-  // Display the result in the element with id="demo"
-  document.getElementById("demo").innerHTML = days + "d " + hours + "h "
-  + minutes + "m " + seconds + "s ";
+    // create list
+    let list = document.createElement('li');
+    list.setAttribute("id", div_name);
+    list.setAttribute("list-style-type", "none");
 
-  // If the count down is finished, write some text 
-  if (distance < 0) {
-    clearInterval(x);
-    document.getElementById("demo").innerHTML = "EXPIRED";
-  }
-}, 1000);
+    // create button
+    let delete_button = document.createElement('button');
+
+    // create task name
+    let task_title = document.createElement('span');
+    task_title.innerHTML = data;
+
+    // create rep
+    let rep = document.createElement('span');
+    rep.innerHTML = reps;
+
+    list.appendChild(task_title);
+    list.appendChild(rep);
+    list.appendChild(delete_button);
+
+    document.getElementById('my_ul').appendChild(list);
+}
+
+function createTask() {
+
+    taskNumber += 1;
+              
+    let task = document.getElementById('task_name');
+    let rep = document.getElementById('rep');
+    let value = task.value;
+        
+    if(!value) {
+        alert("Name Cannot be empty!");
+    } 
+    else {
+        createDiv("my_task" + taskNumber, value, rep.value);
+    }
+
+}
+
