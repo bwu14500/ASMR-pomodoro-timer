@@ -43,7 +43,7 @@ i{
     padding-left: 10px;
     padding-right: 10px;
 }
-#delete-btn {
+.delete-btn {
     color: white;
     background-color: rgb(140, 7, 7);
     border: 1px solid black;

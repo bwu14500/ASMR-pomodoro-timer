@@ -108,9 +108,12 @@ function createLi(li_name, data, reps) {
     // create delete button
     let delete_button = document.createElement('button');
     delete_button.setAttribute("class", "btn");
-    delete_button.setAttribute("id", "delete-btn");
+    delete_button.setAttribute("class", "delete-btn");
     delete_button.innerText = "Delete";
-
+    delete_button.onclick = function() {
+        let parent = delete_button.parentNode;
+        document.querySelector("ul").removeChild(parent);
+    }
     // create task name
     let task_title = document.createElement('span');
     task_title.setAttribute("class", "task-title");
