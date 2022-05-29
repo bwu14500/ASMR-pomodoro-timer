@@ -187,3 +187,18 @@ document.querySelector("#task-form").onsubmit = function(event) {
     }
 
 }
+
+// reset back to original state
+function reset() {
+    taskNumber = 0;
+    timer = 0;
+    paused = false;
+    menVoice = true;
+    currentTask = "Task1";
+    current_state = "state-break";
+    document.querySelector('#time').textContent = "25 : 00";
+    document.querySelector("#current-state").textContent = "Let's Get Started!"
+    document.querySelector("#sound-btn").textContent = "男性向け (click to switch)";
+    document.querySelector("#sound-btn").style.backgroundColor = "#9BD1E5";
+    document.body.style.backgroundColor = "#5B85AA";
+}
