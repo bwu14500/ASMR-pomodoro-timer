@@ -60,3 +60,6 @@ i{
     padding-left: 69px;
     margin-top: 10px;
 }
+audio {
+    display: none;
+}

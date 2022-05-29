@@ -11,6 +11,36 @@ var current_rep;
 var total_rep;
 let current_state = "state-break";
 
+// ------------------------------------------------ Audio ----------------------------------------------------
+var audio = document.querySelector("audio");
+var male_playlist = new Array("men_voice.mp3");
+var male_index = 0;
+var female_playlist = new Array("women_voice.mp3");
+var female_index = 0;
+
+function playNextAudio() {
+    if (menVoice) {
+        audio.src = male_playlist[male_index];
+        console.log(male_playlist[male_index]);
+        audio.play();
+
+        male_index = ++male_index < male_playlist.length ? male_index : 0;
+    }
+    else {
+        audio.src = female_playlist[female_index];
+        console.log(female_playlist[female_index]);
+        audio.play();
+
+        female_index = ++female_index < female_playlist.length ? female_index : 0;
+    }
+}
+
+function stopAudio() {
+    audio.pause();
+    audio.currentTime = 0;
+}
+// -----------------------------------------------------------------------------------------------------------
+
 // start button on click
 document.querySelector("#start-btn").onclick = function() {
     paused = false;
@@ -55,9 +85,11 @@ document.querySelector("#start-btn").onclick = function() {
                 current_rep.innerHTML = parseInt(current_rep.innerHTML) + 1;
                 if (menVoice){
                     document.body.style.backgroundColor = "#5B85AA";
+                    playNextAudio();
                 }
                 else {
                     document.body.style.backgroundColor = "#EA526F";
+                    playNextAudio();
                 }
                 document.querySelector("#current-state").textContent = "Take a Break!"
             }
@@ -67,7 +99,8 @@ document.querySelector("#start-btn").onclick = function() {
                 current_state.id = "state-rep";
                 timer = pomodoro;
                 document.body.style.backgroundColor = "#FF9B42";
-                document.querySelector("#current-state").textContent = "Fighting!"
+                stopAudio();
+                document.querySelector("#current-state").textContent = "Fighting!";
             }
             else {
                 // next task
@@ -102,6 +135,7 @@ document.querySelector("#start-btn").onclick = function() {
 document.querySelector("#pause-btn").onclick =  function() {
     if(!paused){
         paused = true;
+        audio.pause();
         clearInterval(countdown); // stop the clock
     }
 }
@@ -115,6 +149,7 @@ function reset() {
     menVoice = true;
     currentTask = "Task1";
     current_state = "state-break";
+    stopAudio();
     // let start and pause not work
     document.querySelector("#start-btn").style.display = "none";
     document.querySelector("#pause-btn").style.display = "none";
@@ -128,6 +163,7 @@ function reset() {
 // select next task
 function next_task() {
     // select next task as the current task
+    stopAudio();
     taskNumber -= 1;
     console.log(taskNumber);
     if (taskNumber == 0) {

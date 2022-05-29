@@ -26,9 +26,9 @@ if (parent.id == currentTask) {
 
 // audio add
 var audio = new Audio();
-var male_playlist = new Array("", "", "", "", "");
+var male_playlist = new Array("men_voice.mp3");
 var male_index = 0;
-var female_playlist = new Array("", "", "", "", "");
+var female_playlist = new Array("women_voice.mp3");
 var female_index = 0;
 
 // gender: true = male, false = female
