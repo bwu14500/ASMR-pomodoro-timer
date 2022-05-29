@@ -1,6 +1,6 @@
 var taskNumber = 0;
-var pomodoro = 1500;
-var timebreak = 300;
+var pomodoro = 10;
+var timebreak = 10;
 var timer = 0;
 var paused = false;
 var countdown;
@@ -8,35 +8,20 @@ var menVoice = true;
 var currentTask = "Task1";
 let current_state = "state-break";
 
-document.querySelector("#sound-btn").onclick = function(event) {
-    if (current_state == "state-break") {
-        if (menVoice){
-            menVoice = false;
-            this.textContent = "女性向け (click to switch)";
-            this.style.backgroundColor = "#D66BA0";
-            document.body.style.backgroundColor = "#EA526F";
-        }
-        else {
-            menVoice = true;
-            this.textContent = "男性向け (click to switch)";
-            this.style.backgroundColor = "#9BD1E5";
-            document.body.style.backgroundColor = "#5B85AA";
-        }
-    }
-    else {
-        if (menVoice){
-            menVoice = false;
-            this.textContent = "女性向け (click to switch)";
-            this.style.backgroundColor = "#D66BA0";
-        }
-        else {
-            menVoice = true;
-            this.textContent = "男性向け (click to switch)";
-            this.style.backgroundColor = "#9BD1E5";
-        }
-    }
+// reset back to original state
+function reset() {
+    taskNumber = 0;
+    timer = 0;
+    paused = false;
+    menVoice = true;
+    currentTask = "Task1";
+    current_state = "state-break";
+    document.querySelector('#time').textContent = "25 : 00";
+    document.querySelector("#current-state").textContent = "Let's Get Started!"
+    document.querySelector("#sound-btn").textContent = "男性向け (click to switch)";
+    document.querySelector("#sound-btn").style.backgroundColor = "#9BD1E5";
+    document.body.style.backgroundColor = "#5B85AA";
 }
-
 
 function createLi(li_name, data, reps) {
 
@@ -49,7 +34,7 @@ function createLi(li_name, data, reps) {
         start_button.setAttribute("class", "fa fa-play");
         start_button.setAttribute("id", "start-btn");
         // Update the clock every 1 second
-        start_button.onclick = function () {
+        start_button.onclick = function() {
             paused = false;
             // get into working state (orange background and Fighting!)
             document.body.style.backgroundColor = "#FF9B42";
@@ -75,10 +60,10 @@ function createLi(li_name, data, reps) {
             
                 var minutes = parseInt(timer / 60, 10);
                 var seconds = parseInt(timer % 60, 10);
-        
+
                 minutes = minutes < 10 ? "0" + minutes : minutes;
                 seconds = seconds < 10 ? "0" + seconds : seconds;
-        
+
                 document.querySelector('#time').textContent = minutes + " : " + seconds;
                 
                 // If the count down is finished, check if the rep is finished
@@ -109,6 +94,24 @@ function createLi(li_name, data, reps) {
                     else {
                         // next task
                         timer = pomodoro;
+                        // Change finished task display (remove start and pause button, display completed status)
+                        let completedTask = document.querySelector("#"+ currentTask);
+                        completedTask.innerHTML =  completedTask.innerHTML + " Completed";
+                        let startBtn = document.querySelector("#start-btn");
+                        let pauseBtn = document.querySelector("#pause-btn");
+                        
+                        
+                        // No task left
+                        if (taskNumber  == parseInt(currentTask.charAt(4))){
+                            document.querySelector('#time').textContent = "25 : 00";
+                            clearInterval(countdown);
+                        }
+                        else {
+                            currentTask = currentTask.slice(0,4) + (parseInt(currentTask.charAt(4))+1);
+                            // Add Start and Pause button to the next task
+                            let nextTask = document.querySelector("#"+ currentTask);
+                        }
+                        completedTask.removeChild(startBtn, pauseBtn);
                     }
                 }
                 
@@ -118,7 +121,7 @@ function createLi(li_name, data, reps) {
         let pause_button = document.createElement('i');
         pause_button.setAttribute("class", "fa fa-pause");
         pause_button.setAttribute("id", "pause-btn");
-        pause_button.onclick = function() {
+        pause_button.onclick =  function() {
             if(!paused){
                 paused = true;
                 clearInterval(countdown); // stop the clock
@@ -152,7 +155,7 @@ function createLi(li_name, data, reps) {
     rep_cur.setAttribute("class", "rep-current");
     rep_cur.innerHTML = '0';
     let slash = document.createElement('span');
-    slash.innerHTML = " / ";
+    slash.innerHTML = "/";
     let rep = document.createElement('span');
     rep.setAttribute("class", "rep");
     rep.innerHTML = reps;
@@ -165,6 +168,36 @@ function createLi(li_name, data, reps) {
     list.appendChild(delete_button);
 
     document.querySelector(".tasklist").appendChild(list);
+}
+
+document.querySelector("#sound-btn").onclick = function() {
+    let soundBtn = document.querySelector("#sound-btn");
+    if (current_state == "state-break") {
+        if (menVoice){
+            menVoice = false;
+            soundBtn.textContent = "女性向け (click to switch)";
+            soundBtn.style.backgroundColor = "#D66BA0";
+            document.body.style.backgroundColor = "#EA526F";
+        }
+        else {
+            menVoice = true;
+            soundBtn.textContent = "男性向け (click to switch)";
+            soundBtn.style.backgroundColor = "#9BD1E5";
+            document.body.style.backgroundColor = "#5B85AA";
+        }
+    }
+    else {
+        if (menVoice){
+            menVoice = false;
+            soundBtn.textContent = "女性向け (click to switch)";
+            soundBtn.style.backgroundColor = "#D66BA0";
+        }
+        else {
+            menVoice = true;
+            soundBtn.textContent = "男性向け (click to switch)";
+            soundBtn.style.backgroundColor = "#9BD1E5";
+        }
+    }
 }
 
 document.querySelector("#task-form").onsubmit = function(event) {
@@ -186,19 +219,4 @@ document.querySelector("#task-form").onsubmit = function(event) {
         createLi("Task" + taskNumber, value, rep_value);
     }
 
-}
-
-// reset back to original state
-function reset() {
-    taskNumber = 0;
-    timer = 0;
-    paused = false;
-    menVoice = true;
-    currentTask = "Task1";
-    current_state = "state-break";
-    document.querySelector('#time').textContent = "25 : 00";
-    document.querySelector("#current-state").textContent = "Let's Get Started!"
-    document.querySelector("#sound-btn").textContent = "男性向け (click to switch)";
-    document.querySelector("#sound-btn").style.backgroundColor = "#9BD1E5";
-    document.body.style.backgroundColor = "#5B85AA";
 }
