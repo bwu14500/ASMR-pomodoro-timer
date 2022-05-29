@@ -46,8 +46,10 @@ document.querySelector("#start-btn").onclick = function() {
     this.style.display = "none";
     document.querySelector("#pause-btn").style.display = "inline";
     // get into working state (orange background and Fighting!)
-    document.body.style.backgroundColor = "#FF9B42";
-    document.querySelector("#current-state").textContent = "Fighting!";
+    if (document.querySelector("#current-state").textContent == "Let's Get Started!") {
+        document.body.style.backgroundColor = "#FF9B42";
+        document.querySelector("#current-state").textContent = "Fighting!";
+    }
 
     currentList = document.querySelector("#" + currentTask);
 
@@ -163,14 +165,17 @@ function reset() {
     menVoice = true;
     currentTask = "Task1";
     current_state = "state-break";
+    document.querySelector("#current-state").textContent == "Let's Get Started!";
     stopAudio();
     // let start and pause not work
     document.querySelector("#start-btn").style.display = "none";
     document.querySelector("#pause-btn").style.display = "none";
+    document.querySelector("#fast-forward-btn").style.display = "none";
     document.querySelector('#time').textContent = "25 : 00";
     document.querySelector("#current-state").textContent = "Let's Get Started!"
-    document.querySelector("#sound-btn").textContent = "男性向け (click to switch)";
-    document.querySelector("#sound-btn").style.backgroundColor = "#9BD1E5";
+    document.querySelector(".front").textContent = "男性向け (click to switch)";
+    document.querySelector(".pushable").style.background = "#D1FAFF";
+    document.querySelector(".front").style.background = "#9BD1E5";
     document.body.style.backgroundColor = "#5B85AA";
 }
 
