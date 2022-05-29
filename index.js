@@ -2,6 +2,7 @@ var taskNumber = 0;
 var pomodoro = 1500;
 var timebreak = 300;
 var timer = 0;
+var temp_timer = 0;
 var paused = false;
 var countdown;
 var menVoice = true;
@@ -41,7 +42,6 @@ function stopAudio() {
 
 // start button on click
 document.querySelector("#start-btn").onclick = function() {
-    paused = false;
     // toggle to pause button
     this.style.display = "none";
     document.querySelector("#pause-btn").style.display = "inline";
@@ -67,6 +67,11 @@ document.querySelector("#start-btn").onclick = function() {
 
     countdown = setInterval(function() {
         
+        if (paused == true) {
+            paused = false;
+            timer = temp_timer;
+        }
+
         var minutes = parseInt(timer / 60, 10);
         var seconds = parseInt(timer % 60, 10);
 
@@ -140,8 +145,13 @@ document.querySelector("#pause-btn").onclick =  function() {
     if(!paused){
         paused = true;
         audio.pause();
+        temp_timer = timer;
         clearInterval(countdown); // stop the clock
     }
+}
+
+document.querySelector("#fast-forward-btn").onclick = function() {
+    timer = 0;
 }
 
 // reset back to original state
