@@ -6,6 +6,9 @@ var paused = false;
 var countdown;
 var menVoice = true;
 var currentTask = "Task1";
+var currentList;
+var current_rep;
+var total_rep;
 let current_state = "state-break";
 
 // start button on click
@@ -18,10 +21,10 @@ document.querySelector("#start-btn").onclick = function() {
     currentList = document.querySelector("#" + currentTask);
 
     // current repetiton in this task
-    let current_rep = currentList.querySelector('.rep-current');
+    current_rep = currentList.querySelector('.rep-current');
 
     // total repetition in this task
-    let total_rep = currentList.querySelector('.rep');
+    total_rep = currentList.querySelector('.rep');
 
     // the state (state-rep or state-break) for this task
     current_state = currentList.querySelector('.task-title');
@@ -88,18 +91,8 @@ document.querySelector("#start-btn").onclick = function() {
                 currentList.replaceChildren(task_complete, delete_button);
 
                 // Select next task
-                next_task(currentList);
-
-                currentList = document.querySelector("#" + currentTask);
-                current_rep = currentList.querySelector('.rep-current');
-                total_rep = currentList.querySelector('.rep');
-                current_state = currentList.querySelector('.task-title');
-                current_state.id = "state-rep";
-                document.body.style.backgroundColor = "#FF9B42";
-                document.querySelector("#current-state").textContent = "Fighting!"
-                if (current_rep.innerHTML == "0") {
-                    timer = pomodoro;
-                }
+                next_task();
+                
             }
         }
         
@@ -133,7 +126,7 @@ function reset() {
 }
 
 // select next task
-function next_task(currentList) {
+function next_task() {
     // select next task as the current task
     taskNumber -= 1;
     console.log(taskNumber);
@@ -143,6 +136,16 @@ function next_task(currentList) {
     else {
         currentList = currentList.nextElementSibling;
         currentTask = currentList.id;
+
+        current_rep = currentList.querySelector('.rep-current');
+        total_rep = currentList.querySelector('.rep');
+        current_state = currentList.querySelector('.task-title');
+        current_state.id = "state-rep";
+        document.body.style.backgroundColor = "#FF9B42";
+        document.querySelector("#current-state").textContent = "Fighting!"
+        if (current_rep.innerHTML == "0") {
+            timer = pomodoro;
+        }
     }
 }
 
@@ -162,6 +165,7 @@ function createLi(li_name, data, reps) {
 
     if (list.id == currentTask) {
         // created list is current task
+        currentList = document.querySelector("#" + currentTask);
     }
     else {
         list.setAttribute("class", "task");
