@@ -6,19 +6,34 @@ var paused = false;
 var countdown;
 var menVoice = true;
 var currentTask = "Task1";
+let current_state = "state-break";
 
 document.querySelector("#sound-btn").onclick = function(event) {
-    if (menVoice){
-        menVoice = false;
-        this.textContent = "女性向け (click to switch)";
-        this.style.backgroundColor = "#D66BA0";
-        document.body.style.backgroundColor = "#EA526F";
+    if (current_state == "state-break") {
+        if (menVoice){
+            menVoice = false;
+            this.textContent = "女性向け (click to switch)";
+            this.style.backgroundColor = "#D66BA0";
+            document.body.style.backgroundColor = "#EA526F";
+        }
+        else {
+            menVoice = true;
+            this.textContent = "男性向け (click to switch)";
+            this.style.backgroundColor = "#9BD1E5";
+            document.body.style.backgroundColor = "#5B85AA";
+        }
     }
     else {
-        menVoice = true;
-        this.textContent = "男性向け (click to switch)";
-        this.style.backgroundColor = "#9BD1E5";
-        document.body.style.backgroundColor = "#5B85AA";
+        if (menVoice){
+            menVoice = false;
+            this.textContent = "女性向け (click to switch)";
+            this.style.backgroundColor = "#D66BA0";
+        }
+        else {
+            menVoice = true;
+            this.textContent = "男性向け (click to switch)";
+            this.style.backgroundColor = "#9BD1E5";
+        }
     }
 }
 
@@ -36,7 +51,9 @@ function createLi(li_name, data, reps) {
         // Update the clock every 1 second
         start_button.onclick = function () {
             paused = false;
-            
+            // get into working state (orange background and Fighting!)
+            document.body.style.backgroundColor = "#FF9B42";
+            document.querySelector("#current-state").textContent = "Fighting!"
             // currentList that is playing
             let currentList = document.querySelector("#" + currentTask);
 
@@ -47,12 +64,11 @@ function createLi(li_name, data, reps) {
             let total_rep = currentList.querySelector('.rep');
 
             // the state (state-rep or state-break) for this task
-            let current_state = currentList.querySelector('.task-title');
+            current_state = currentList.querySelector('.task-title');
 
             // initial state just before timer starts
             if (current_rep.innerHTML == "0") {
                 timer = pomodoro;
-                current_rep.innerHTML = "1";
             }
 
             countdown = setInterval(function() {
@@ -73,13 +89,22 @@ function createLi(li_name, data, reps) {
                         // rep to break
                         current_state.id = "state-break";
                         timer = timebreak;
+                        current_rep.innerHTML = parseInt(current_rep.innerHTML) + 1;
+                        if (menVoice){
+                            document.body.style.backgroundColor = "#5B85AA";
+                        }
+                        else {
+                            document.body.style.backgroundColor = "#EA526F";
+                        }
+                        document.querySelector("#current-state").textContent = "Take a Break!"
                     }
                     else if (parseInt(current_rep.innerHTML) < parseInt(total_rep.innerHTML) &&
                             current_state.id == "state-break") {
                         // break to next rep
                         current_state.id = "state-rep";
-                        current_rep.innerHTML = parseInt(current_rep.innerHTML) + 1;
                         timer = pomodoro;
+                        document.body.style.backgroundColor = "#FF9B42";
+                        document.querySelector("#current-state").textContent = "Fighting!"
                     }
                     else {
                         // next task
