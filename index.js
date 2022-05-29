@@ -200,6 +200,7 @@ function createLi(li_name, data, reps) {
         currentTask = list.id;
         // let start and pause work
         document.querySelector("#start-btn").style.display = "inline";
+        document.querySelector("#fast-forward-btn").style.display = "inline";
     }
 
     if (list.id == currentTask) {

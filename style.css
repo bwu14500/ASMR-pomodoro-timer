@@ -45,6 +45,11 @@ ul {
     font-size: 30px;
     margin-bottom: 5px;
 }
+#fast-forward-btn {
+    text-align: center;
+    font-size: 28px;
+    display: none;
+}
 #sound-btn {
     background-color: #9BD1E5;
     border: 1px solid;
