@@ -1,6 +1,6 @@
 var taskNumber = 0;
-var pomodoro = 11;
-var timebreak = 10;
+var pomodoro = 1500;
+var timebreak = 300;
 var timer = 0;
 var paused = false;
 var countdown;
@@ -21,14 +21,12 @@ var female_index = 0;
 function playNextAudio() {
     if (menVoice) {
         audio.src = male_playlist[male_index];
-        console.log(male_playlist[male_index]);
         audio.play();
 
         male_index = ++male_index < male_playlist.length ? male_index : 0;
     }
     else {
         audio.src = female_playlist[female_index];
-        console.log(female_playlist[female_index]);
         audio.play();
 
         female_index = ++female_index < female_playlist.length ? female_index : 0;
