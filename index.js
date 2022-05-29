@@ -218,7 +218,7 @@ function createLi(li_name, data, reps) {
         currentList = document.querySelector("#" + currentTask);
     }
     list.setAttribute("class", "task");
-    
+
     // create delete button
     let delete_button = document.createElement('button');
     delete_button.setAttribute("class", "btn");
@@ -264,27 +264,32 @@ document.querySelector("#sound-btn").onclick = function() {
     if (current_state == "state-break") {
         if (menVoice){
             menVoice = false;
-            soundBtn.textContent = "女性向け (click to switch)";
-            soundBtn.style.backgroundColor = "#D66BA0";
-            document.body.style.backgroundColor = "#EA526F";
+            document.querySelector(".front").textContent = "女性向け (click to switch)";
+            document.querySelector(".pushable").style.background = "#E76B74";
+            document.querySelector(".front").style.background = "#D66BA0";
+            document.body.style.background = "#EA526F";
         }
         else {
             menVoice = true;
-            soundBtn.textContent = "男性向け (click to switch)";
-            soundBtn.style.backgroundColor = "#9BD1E5";
-            document.body.style.backgroundColor = "#5B85AA";
+            document.querySelector(".front").textContent = "男性向け (click to switch)";
+            document.querySelector(".pushable").style.background = "#D1FAFF";
+            document.querySelector(".front").style.background = "#9BD1E5";
+            document.body.style.background = "#5B85AA";
         }
     }
     else {
         if (menVoice){
             menVoice = false;
-            soundBtn.textContent = "女性向け (click to switch)";
-            soundBtn.style.backgroundColor = "#D66BA0";
+            document.querySelector(".front").textContent = "女性向け (click to switch)";
+            document.querySelector(".pushable").style.background = "#E76B74";
+            document.querySelector(".front").style.background = "#D66BA0";
         }
         else {
             menVoice = true;
-            soundBtn.textContent = "男性向け (click to switch)";
-            soundBtn.style.backgroundColor = "#9BD1E5";
+            document.querySelector(".front").textContent = "男性向け (click to switch)";
+            document.querySelector(".pushable").style.background = "#D1FAFF";
+            document.querySelector(".front").style.background = "#9BD1E5";
+            soundBtn.style.background = "#9BD1E5";
         }
     }
 }

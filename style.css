@@ -50,10 +50,6 @@ ul {
     font-size: 28px;
     display: none;
 }
-#sound-btn {
-    background-color: #9BD1E5;
-    border: 1px solid;
-}
 i{
     padding-left: 10px;
     padding-right: 10px;
@@ -73,4 +69,25 @@ i{
 }
 audio {
     display: none;
+}
+.pushable {
+    background: #D1FAFF;
+    border-radius: 12px;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    outline-offset: 4px;
+}
+.front {
+    display: block;
+    padding: 12px 42px;
+    border-radius: 12px;
+    font-size: 1.25rem;
+    background: #9BD1E5;
+    color: white;
+    transform: translateY(-6px);
+}
+
+.pushable:active .front {
+    transform: translateY(-2px);
 }
