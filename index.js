@@ -217,10 +217,8 @@ function createLi(li_name, data, reps) {
         // created list is current task
         currentList = document.querySelector("#" + currentTask);
     }
-    else {
-        list.setAttribute("class", "task");
-    }
-
+    list.setAttribute("class", "task");
+    
     // create delete button
     let delete_button = document.createElement('button');
     delete_button.setAttribute("class", "btn");
