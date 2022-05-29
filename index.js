@@ -44,6 +44,9 @@ function stopAudio() {
 // start button on click
 document.querySelector("#start-btn").onclick = function() {
     paused = false;
+    // toggle to pause button
+    this.style.display = "none";
+    document.querySelector("#pause-btn").style.display = "inline";
     // get into working state (orange background and Fighting!)
     document.body.style.backgroundColor = "#FF9B42";
     document.querySelector("#current-state").textContent = "Fighting!";
@@ -133,6 +136,9 @@ document.querySelector("#start-btn").onclick = function() {
 }
 
 document.querySelector("#pause-btn").onclick =  function() {
+    // toggle to pause button
+    this.style.display = "none";
+    document.querySelector("#start-btn").style.display = "inline";
     if(!paused){
         paused = true;
         audio.pause();
@@ -196,7 +202,6 @@ function createLi(li_name, data, reps) {
         currentTask = list.id;
         // let start and pause work
         document.querySelector("#start-btn").style.display = "inline";
-        document.querySelector("#pause-btn").style.display = "inline";
     }
 
     if (list.id == currentTask) {

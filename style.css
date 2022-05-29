@@ -33,11 +33,17 @@ ul {
     list-style-type: none;
 }
 #start-btn {
+    text-align: center;
     color: green;
     display: none;
+    font-size: 32px;
+    margin-bottom: 5px;
 }
 #pause-btn {
+    text-align: center;
     display: none;
+    font-size: 30px;
+    margin-bottom: 5px;
 }
 #sound-btn {
     background-color: #9BD1E5;
